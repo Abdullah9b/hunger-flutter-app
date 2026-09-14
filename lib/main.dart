@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
+import 'screens/auth/auth_gate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class HungerApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2F7D72)),
         fontFamily: 'Roboto',
       ),
-      home: const HungerHomePage(),
+      home: const AuthGate(),
     );
   }
 }
