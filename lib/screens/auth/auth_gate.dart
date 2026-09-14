@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
+import '../../services/auth_service.dart';
 import 'login_screen.dart';
 
 class AuthGate extends StatelessWidget {
@@ -19,7 +20,24 @@ class AuthGate extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          return const HungerHomePage();
+          return FutureBuilder(
+            future: AuthService().ensureUserProfile(),
+            builder: (context, profileSnapshot) {
+              if (profileSnapshot.connectionState == ConnectionState.waiting) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              if (profileSnapshot.hasError) {
+                return Scaffold(
+                  body: Center(child: Text('Error: ${profileSnapshot.error}')),
+                );
+              }
+
+              return const HungerHomePage();
+            },
+          );
         }
 
         return const LoginScreen();
