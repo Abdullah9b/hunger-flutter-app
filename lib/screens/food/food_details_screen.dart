@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/food.dart';
+import '../../services/cart_service.dart';
 
 class FoodDetailsScreen extends StatelessWidget {
   final Food food;
@@ -106,7 +108,13 @@ class FoodDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<CartService>().addToCart(food);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Added to cart')),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,
                     foregroundColor: Colors.white,

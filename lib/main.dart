@@ -7,12 +7,22 @@ import 'screens/auth/auth_gate.dart';
 import 'screens/food/food_details_screen.dart';
 import 'services/food_service.dart';
 
+import 'package:provider/provider.dart';
+
+import 'services/cart_service.dart';
+import 'screens/cart/cart_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const HungerApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => CartService(),
+      child: const HungerApp(),
+    ),
+  );
 }
 
 class HungerApp extends StatelessWidget {
@@ -56,17 +66,19 @@ class _HungerHomePageState extends State<HungerHomePage> {
     return Scaffold(
       body: _selectedIndex == 0
           ? _buildHomePage()
-          : Center(
+          : _selectedIndex == 1
+          ? const Center(
               child: Text(
-                _selectedIndex == 1
-                    ? 'Favorites'
-                    : _selectedIndex == 2
-                    ? 'Orders'
-                    : 'Profile',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                'Favorites',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            )
+          : _selectedIndex == 2
+          ? const CartScreen()
+          : const Center(
+              child: Text(
+                'Profile',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
       bottomNavigationBar: NavigationBar(
@@ -89,9 +101,9 @@ class _HungerHomePageState extends State<HungerHomePage> {
             label: 'Favorites',
           ),
           NavigationDestination(
-            icon: Icon(Icons.receipt_long_outlined),
-            selectedIcon: Icon(Icons.receipt_long),
-            label: 'Orders',
+            icon: Icon(Icons.shopping_cart_outlined),
+            selectedIcon: Icon(Icons.shopping_cart),
+            label: 'Cart',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),
