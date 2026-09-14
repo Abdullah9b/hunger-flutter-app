@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1041099033322",
+    "project_id": "hunger-flutter",
+    "storage_bucket": "hunger-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041099033322:android:c876e813edb96da77aa593",
+        "android_client_info": {
+          "package_name": "com.example.hunger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiPmznZbMfUEbjURVcfS1fyoP_X3Wcq3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
