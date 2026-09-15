@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import 'services/cart_service.dart';
 import 'screens/cart/cart_screen.dart';
+import 'screens/orders/orders_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,6 +76,8 @@ class _HungerHomePageState extends State<HungerHomePage> {
             )
           : _selectedIndex == 2
           ? const CartScreen()
+          : _selectedIndex == 3
+          ? const OrdersScreen()
           : const Center(
               child: Text(
                 'Profile',
@@ -104,6 +107,11 @@ class _HungerHomePageState extends State<HungerHomePage> {
             icon: Icon(Icons.shopping_cart_outlined),
             selectedIcon: Icon(Icons.shopping_cart),
             label: 'Cart',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.receipt_long_outlined),
+            selectedIcon: Icon(Icons.receipt_long),
+            label: 'Orders',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),
