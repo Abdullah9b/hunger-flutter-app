@@ -10,8 +10,10 @@ import 'services/food_service.dart';
 import 'package:provider/provider.dart';
 
 import 'services/cart_service.dart';
+import 'services/favorite_service.dart';
 import 'screens/cart/cart_screen.dart';
 import 'screens/orders/orders_screen.dart';
+import 'screens/favorite/favorite_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +21,11 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => CartService(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartService()),
+        ChangeNotifierProvider(create: (_) => FavoriteService()),
+      ],
       child: const HungerApp(),
     ),
   );
@@ -68,12 +73,7 @@ class _HungerHomePageState extends State<HungerHomePage> {
       body: _selectedIndex == 0
           ? _buildHomePage()
           : _selectedIndex == 1
-          ? const Center(
-              child: Text(
-                'Favorites',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            )
+          ? const FavoriteScreen()
           : _selectedIndex == 2
           ? const CartScreen()
           : _selectedIndex == 3
@@ -486,18 +486,32 @@ class _HungerHomePageState extends State<HungerHomePage> {
                 Positioned(
                   top: 8,
                   right: 8,
-                  child: Container(
-                    width: 34,
-                    height: 34,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.favorite_border,
-                      color: Color(0xFF687172),
-                      size: 19,
-                    ),
+                  child: Consumer<FavoriteService>(
+                    builder: (context, favoriteService, child) {
+                      final isFavorite = favoriteService.isFavorite(food.id);
+
+                      return Container(
+                        width: 34,
+                        height: 34,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            favoriteService.toggleFavorite(food);
+                          },
+                          icon: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite
+                                ? const Color(0xFF2F7D72)
+                                : const Color(0xFF687172),
+                            size: 19,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
