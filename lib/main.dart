@@ -15,6 +15,7 @@ import 'services/favorite_service.dart';
 import 'screens/cart/cart_screen.dart';
 import 'screens/orders/orders_screen.dart';
 import 'screens/favorite/favorite_screen.dart';
+import 'screens/notifications/notification_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -187,27 +188,37 @@ class _HungerHomePageState extends State<HungerHomePage> {
                           ),
                         ],
                       ),
-                      child: Stack(
-                        children: [
-                          const Center(
-                            child: Icon(
-                              Icons.notifications_none_rounded,
-                              size: 29,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationScreen(),
                             ),
-                          ),
-                          Positioned(
-                            top: 10,
-                            right: 12,
-                            child: Container(
-                              width: 8,
-                              height: 8,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                shape: BoxShape.circle,
+                          );
+                        },
+                        child: Stack(
+                          children: [
+                            const Center(
+                              child: Icon(
+                                Icons.notifications_none_rounded,
+                                size: 29,
                               ),
                             ),
-                          ),
-                        ],
+                            Positioned(
+                              top: 10,
+                              right: 12,
+                              child: Container(
+                                width: 8,
+                                height: 8,
+                                decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
