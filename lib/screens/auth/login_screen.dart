@@ -46,20 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
 
-      String message = 'Login failed';
-
-      if (e.code == 'invalid-credential') {
-        message = 'Invalid email or password';
-      } else if (e.code == 'user-not-found') {
-        message = 'No account found with this email';
-      } else if (e.code == 'wrong-password') {
-        message = 'Incorrect password';
-      } else if (e.code == 'invalid-email') {
-        message = 'Invalid email address';
-      }
-
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(message)));
+          .showSnackBar(SnackBar(content: Text('Firebase error: ${e.code}')));
     } catch (e) {
       if (!mounted) return;
 
