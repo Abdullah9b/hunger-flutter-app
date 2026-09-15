@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'food/admin_food_screen.dart';
@@ -62,6 +63,19 @@ class AdminScreen extends StatelessWidget {
                 ),
               ],
             ),
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: OutlinedButton.icon(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                },
+                icon: const Icon(Icons.logout),
+                label: const Text('Logout'),
+              ),
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

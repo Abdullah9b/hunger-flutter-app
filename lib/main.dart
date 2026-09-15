@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'screens/profile/profile_screen.dart';
 import 'firebase_options.dart';
 import 'models/food.dart';
 import 'screens/auth/auth_gate.dart';
@@ -78,12 +79,7 @@ class _HungerHomePageState extends State<HungerHomePage> {
           ? const CartScreen()
           : _selectedIndex == 3
           ? const OrdersScreen()
-          : const Center(
-              child: Text(
-                'Profile',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
+          : const ProfileScreen(),
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.white,
         selectedIndex: _selectedIndex,
